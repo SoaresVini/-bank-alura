@@ -1,18 +1,20 @@
 export default function ehUmCPF(campo) {
     const cpf = campo.value.replace(/\.|-/g, "")
 
-    if( validaNumerosRepitos(cpf) || validaPriemiroDigito(cpf) || validaSegundoDigito(cpf)) {
-        console.log("ESSE CPF NÂO EXISTE");
-    }else {
-        console.log("ESSE AI EXISTE");
-    }
+    console.log(validaNumerosRepitos(cpf))
+    console.log(validaPrimeiroDigito(cpf))
+    console.log(validaSegundoDigito(cpf))
 
+    if( validaNumerosRepitos(cpf) || !validaPrimeiroDigito(cpf) || !validaSegundoDigito(cpf)) {
+        campo.setCustomValidity("TMJ");
+        // O setCustomValidity tem que ser True para poder aparecer as mensagens de validação
+    }
 }
 
 function validaNumerosRepitos(cpf) {
 
     const numeros = cpf.split("")
-    let repitiu = false;
+    let repitiu = true;
 
     for (let i = 0; i < numeros.length -1; i++) {
         repitiu = numeros[i] === numeros[i - 1];
@@ -21,7 +23,7 @@ function validaNumerosRepitos(cpf) {
     return repitiu;
 }
 
-function validaPriemiroDigito(cpf) {
+function validaPrimeiroDigito(cpf) {
     let soma = 0;
     let multiplicador = 10;
 
@@ -37,9 +39,7 @@ function validaPriemiroDigito(cpf) {
         soma = 0;
     }
 
-    console.log(soma)
-
-    return soma != cpf[9];
+    return soma !== cpf[9];
 
 }
 
@@ -58,8 +58,6 @@ function validaSegundoDigito(cpf) {
         soma = 0;
     }
 
-    console.log(soma)
-
-    return soma != cpf[10];
+    return soma !== cpf[10];
 }
 
